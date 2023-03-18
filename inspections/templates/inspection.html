@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inspection Detail</title>
+
+    <style type="text/css">
+    .inline-div {
+        display: inline;
+    }
+        .company-background-full {
+            background-image: url(background.png);
+            background-repeat: no-repeat;
+            background-position-y: bottom;
+            background-position-x: center;
+            background-size: contain;
+        }
+        .card-main {
+    width: 100%;
+    margin-top: 1.5rem;
+    border-radius: 5px;
+}
+.card {
+    margin-bottom: 1.5rem;
+    border-color: #edf2f9;
+    box-shadow: 0 0.75rem 1.5rem rgba(18,38,63,.03);
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #edf2f9;
+    border-radius: .5rem;
+}
+.card-main .card-header {
+    padding-top: 1.5rem;
+    border-bottom: 1px solid #C4C8D1;
+    align-items: center !important;
+}
+.card-main .card-header .card-header-title {
+    color: #2B2B40;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+.mark-title {
+    color: #e63757!important;
+    text-align: right!important;
+
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+    </style>
+</head>
+<body>
+<div class="card card-main company-background-full">
+    <div class="card-header">
+        <table>
+            <tbody>
+            <tr>
+                <td class="card-header-title">Details View of Visit Result</td>
+                <td class="mark-title">Mark: {{ total_mark }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-body py-0">
+        <div class="col-6 px-4 my-4">
+            <table width="250" style="margin-top: 25px; margin-bottom: 25px;">
+                <tbody>
+                <tr>
+                    <th align="left">Distributor Name:</th>
+                    <td class="pl-2">{{ distributor.name }}</td>
+                </tr>
+                <tr>
+                    <th align="left">Inspector Name:</th>
+                    <td class="pl-2">{{ inspector.name }}</td>
+                </tr>
+                <tr>
+                    <th align="left">Serial Number:</th>
+                    <td class="pl-2">{{ serial_no }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-12 px-4">
+            <table>
+                <tbody>
+                {% for checklist in checklists %}
+                <tr>
+                    <td width="50%">{{ checklist.id }}. {{ checklist.detail_en }}</td>
+                    <td>
+                        {% if checklist.response is True %}
+                        <div>
+                            Yes
+                        </div>
+                        {% else %}
+                        <div>
+                            No
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if checklist.attachment is not None %}
+                        {{ checklist.note }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if checklist.attachment is not None %}
+                        <a href="{{ checklist.attachment.attachment }}" target="_blank">
+                            <img
+                                    src="{{ checklist.attachment.attachment }}"
+                                    alt="{{ checklist.attachment.name }}"
+                                    width="80"
+                                    height="80"
+                            />
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
